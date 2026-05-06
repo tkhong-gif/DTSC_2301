@@ -2,146 +2,644 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>My Personal Website</title>
+    <title>Tam Khong — Data Science Student</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+    <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
     <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
+        :root {
+            --bg: #0d0d0f;
+            --surface: #16161a;
+            --surface2: #1e1e24;
+            --border: rgba(255,255,255,0.07);
+            --accent: #c8f135;
+            --accent2: #5bf0c4;
+            --text: #f0f0ee;
+            --muted: #7a7a85;
+            --tag-bg: rgba(200, 241, 53, 0.1);
         }
 
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'DM Sans', sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* ── Noise texture overlay ── */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 0;
+            opacity: 0.5;
+        }
+
+        /* ── Header ── */
         header {
-            background-color: #222;
-            color: white;
-            padding: 15px 30px;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(13,13,15,0.85);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border);
+            padding: 0 48px;
+            height: 64px;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
-        header h1 {
-            margin: 0;
-            font-size: 20px;
+        .logo {
+            font-family: 'Syne', sans-serif;
+            font-weight: 800;
+            font-size: 18px;
+            letter-spacing: -0.5px;
+            color: var(--text);
+            display: flex;
+            align-items: center;
+            gap: 8px;
         }
+
+        .logo-dot {
+            width: 8px;
+            height: 8px;
+            background: var(--accent);
+            border-radius: 50%;
+            display: inline-block;
+            animation: pulse 2s ease-in-out infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.5; transform: scale(0.8); }
+        }
+
+        nav { display: flex; gap: 4px; }
 
         nav a {
-            color: white;
+            color: var(--muted);
             text-decoration: none;
-            margin-left: 20px;
-            font-weight: bold;
+            font-size: 14px;
+            font-weight: 500;
+            padding: 6px 14px;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+            letter-spacing: 0.01em;
         }
 
-        nav a:hover {
-            color: #00bcd4;
+        nav a:hover, nav a.active {
+            color: var(--text);
+            background: var(--surface2);
+        }
+
+        nav a.active {
+            color: var(--accent);
+        }
+
+        /* ── Main Content ── */
+        main {
+            position: relative;
+            z-index: 1;
         }
 
         section {
-            padding: 40px;
+            padding: 80px 48px;
             display: none;
+            max-width: 960px;
+            margin: 0 auto;
+            animation: fadeUp 0.4s ease forwards;
         }
 
-        section.active {
-            display: block;
+        section.active { display: block; }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(20px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+
+        /* ── Home Section ── */
+        .hero-eyebrow {
+            font-size: 12px;
+            font-weight: 500;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 20px;
+        }
+
+        .hero-title {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(40px, 6vw, 72px);
+            font-weight: 800;
+            line-height: 1.05;
+            letter-spacing: -2px;
+            margin-bottom: 24px;
+        }
+
+        .hero-title span {
+            color: var(--accent);
+        }
+
+        .hero-desc {
+            font-size: 17px;
+            color: var(--muted);
+            max-width: 520px;
+            line-height: 1.7;
+            margin-bottom: 40px;
+            font-weight: 300;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .btn-primary {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            background: var(--accent);
+            color: #0d0d0f;
+            border: none;
+            border-radius: 8px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.2s ease;
+            letter-spacing: 0.01em;
+        }
+
+        .btn-primary:hover {
+            background: #d4f550;
+            transform: translateY(-1px);
+            box-shadow: 0 8px 24px rgba(200, 241, 53, 0.25);
+        }
+
+        .btn-ghost {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            background: transparent;
+            color: var(--text);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .btn-ghost:hover {
+            background: var(--surface2);
+            border-color: rgba(255,255,255,0.15);
+        }
+
+        .hero-stats {
+            display: flex;
+            gap: 40px;
+            margin-top: 60px;
+            padding-top: 40px;
+            border-top: 1px solid var(--border);
+        }
+
+        .stat-num {
+            font-family: 'Syne', sans-serif;
+            font-size: 32px;
+            font-weight: 800;
+            color: var(--text);
+            letter-spacing: -1px;
+        }
+
+        .stat-label {
+            font-size: 13px;
+            color: var(--muted);
+            margin-top: 2px;
+        }
+
+        /* ── Section Headers ── */
+        .section-header {
+            margin-bottom: 48px;
+        }
+
+        .section-label {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: var(--accent);
+            margin-bottom: 12px;
+        }
+
+        .section-title {
+            font-family: 'Syne', sans-serif;
+            font-size: 36px;
+            font-weight: 800;
+            letter-spacing: -1px;
+            color: var(--text);
+        }
+
+        .section-subtitle {
+            font-size: 15px;
+            color: var(--muted);
+            margin-top: 8px;
+            font-weight: 300;
+        }
+
+        /* ── Project Cards ── */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 20px;
         }
 
         .card {
-            background: white;
-            padding: 20px;
-            margin-bottom: 20px;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 28px;
+            transition: all 0.25s ease;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
         }
 
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0;
+            height: 2px;
+            background: linear-gradient(90deg, var(--accent), var(--accent2));
+            opacity: 0;
+            transition: opacity 0.25s ease;
+        }
+
+        .card:hover {
+            border-color: rgba(255,255,255,0.14);
+            transform: translateY(-4px);
+            box-shadow: 0 20px 48px rgba(0,0,0,0.4);
+        }
+
+        .card:hover::before { opacity: 1; }
+
+        .card-number {
+            font-family: 'Syne', sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            color: var(--muted);
+            margin-bottom: 16px;
+            text-transform: uppercase;
+        }
+
+        .card h3 {
+            font-family: 'Syne', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 10px;
+            letter-spacing: -0.3px;
+        }
+
+        .card p {
+            font-size: 14px;
+            color: var(--muted);
+            line-height: 1.65;
+            font-weight: 300;
+            flex: 1;
+            margin-bottom: 24px;
+        }
+
+        .card-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            margin-bottom: 20px;
+        }
+
+        .tag {
+            font-size: 11px;
+            font-weight: 500;
+            padding: 4px 10px;
+            background: var(--tag-bg);
+            color: var(--accent);
+            border-radius: 20px;
+            letter-spacing: 0.02em;
+        }
+
+        .card-links {
+            display: flex;
+            gap: 10px;
+            margin-top: auto;
+        }
+
+        .card-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 13px;
+            font-weight: 500;
+            color: var(--muted);
+            text-decoration: none;
+            padding: 8px 14px;
+            background: var(--surface2);
+            border-radius: 6px;
+            border: 1px solid var(--border);
+            transition: all 0.2s ease;
+        }
+
+        .card-link:hover {
+            color: var(--accent);
+            border-color: rgba(200,241,53,0.3);
+            background: rgba(200,241,53,0.06);
+        }
+
+        /* ── Blog Section ── */
+        .blog-list { display: flex; flex-direction: column; gap: 16px; }
+
+        .blog-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 12px;
+            padding: 28px 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            transition: all 0.25s ease;
+            cursor: pointer;
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .blog-card:hover {
+            border-color: rgba(255,255,255,0.14);
+            background: var(--surface2);
+            transform: translateX(4px);
+        }
+
+        .blog-card-left { flex: 1; }
+
+        .blog-meta {
+            font-size: 12px;
+            color: var(--muted);
+            margin-bottom: 8px;
+            letter-spacing: 0.05em;
+        }
+
+        .blog-card h3 {
+            font-family: 'Syne', sans-serif;
+            font-size: 18px;
+            font-weight: 700;
+            letter-spacing: -0.3px;
+            margin-bottom: 8px;
+        }
+
+        .blog-card p {
+            font-size: 14px;
+            color: var(--muted);
+            font-weight: 300;
+            line-height: 1.6;
+        }
+
+        .blog-arrow {
+            color: var(--muted);
+            font-size: 20px;
+            margin-left: 24px;
+            transition: all 0.2s ease;
+        }
+
+        .blog-card:hover .blog-arrow {
+            color: var(--accent);
+            transform: translateX(4px);
+        }
+
+        /* ── Footer ── */
         footer {
+            position: relative;
+            z-index: 1;
             text-align: center;
-            padding: 20px;
-            background: #222;
-            color: white;
+            padding: 32px 48px;
+            border-top: 1px solid var(--border);
             margin-top: 40px;
         }
 
-        button {
-            padding: 8px 15px;
-            background-color: #00bcd4;
-            border: none;
-            color: white;
-            border-radius: 5px;
-            cursor: pointer;
+        footer p {
+            font-size: 13px;
+            color: var(--muted);
         }
 
-        button:hover {
-            background-color: #0097a7;
+        footer span {
+            color: var(--accent);
+        }
+
+        /* ── Background Glow ── */
+        .bg-glow {
+            position: fixed;
+            width: 600px;
+            height: 600px;
+            border-radius: 50%;
+            filter: blur(120px);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .bg-glow-1 {
+            background: rgba(200, 241, 53, 0.04);
+            top: -200px;
+            right: -100px;
+        }
+
+        .bg-glow-2 {
+            background: rgba(91, 240, 196, 0.03);
+            bottom: -200px;
+            left: -100px;
+        }
+
+        @media (max-width: 640px) {
+            header { padding: 0 20px; }
+            section { padding: 48px 20px; }
+            .hero-stats { gap: 24px; }
+            .projects-grid { grid-template-columns: 1fr; }
         }
     </style>
 </head>
 <body>
 
+<div class="bg-glow bg-glow-1"></div>
+<div class="bg-glow bg-glow-2"></div>
+
 <header>
-    <h1>My Website</h1>
+    <div class="logo">
+        <span class="logo-dot"></span>
+        Tam Khong
+    </div>
     <nav>
-        <a href="#" onclick="showSection('home')">Home</a>
-        <a href="#" onclick="showSection('portfolio')">Portfolio</a>
-        <a href="#" onclick="showSection('blog')">Blog</a>
+        <a href="#" id="nav-home" class="active" onclick="showSection('home')">Home</a>
+        <a href="#" id="nav-portfolio" onclick="showSection('portfolio')">Portfolio</a>
+        <a href="#" id="nav-blog" onclick="showSection('blog')">Blog</a>
     </nav>
 </header>
 
-<section id="home" class="active">
-    <h2>Welcome</h2>
-    <p>Hello! This is my personal website. Explore my portfolio and blog using the menu above.</p>
-</section>
+<main>
 
-<section id="portfolio">
-    <h2>My Portfolio</h2>
+    <!-- HOME -->
+    <section id="home" class="active">
+        <p class="hero-eyebrow">Hi, I'm Tam Khong</p>
+        <h1 class="hero-title">Data Science<br><span>Student.</span></h1>
+        <p class="hero-desc">
+            I explore patterns in data, build predictive models, and document what I learn along the way. Browse my projects and thoughts below.
+        </p>
+        <div class="hero-actions">
+            <a href="#" class="btn-primary" onclick="showSection('portfolio')">
+                View Projects →
+            </a>
+            <a href="#" class="btn-ghost" onclick="showSection('blog')">
+                Read the Blog
+            </a>
+        </div>
+        <div class="hero-stats">
+            <div>
+                <div class="stat-num">3</div>
+                <div class="stat-label">Projects</div>
+            </div>
+            <div>
+                <div class="stat-num">2</div>
+                <div class="stat-label">Blog Posts</div>
+            </div>
+            <div>
+                <div class="stat-num">∞</div>
+                <div class="stat-label">Things to learn</div>
+            </div>
+        </div>
+    </section>
 
-    <div class="card">
-        <h3>Project 1</h3>
-        <p>Analyze if lower sleep can lead to higher stress level.</p>
-        <a target="_blank" href="https://github.com/tkhong-gif/DTSC_2301">Github Repository -></a>
-        <br>
-        <a target="_blank" href="files/Data science project 2.pdf">Project Report -></a>
-        
-    </div>
+    <!-- PORTFOLIO -->
+    <section id="portfolio">
+        <div class="section-header">
+            <p class="section-label">My Work</p>
+            <h2 class="section-title">Portfolio</h2>
+            <p class="section-subtitle">A collection of data science and analytics projects.</p>
+        </div>
 
-    <div class="card">
-        <h3>Project 2</h3>
-        <p>League of Legend win rate prediction between champion.</p>
-        <a target="_blank" href="https://github.com/tkhong-gif/DTSC_2301/blob/main/Data%20Science%20Project%202.ipynb">Github Repository -></a>
-        <br>
-        <a target="_blank" href="https://docs.google.com/document/d/1JvUqBsizhrrGYZVQflhtMDibColCYIcNzXtAVeF2XMs/edit?tab=t.0">Project Report -></a>
-    </div>
+        <div class="projects-grid">
 
-</section>
+            <!-- Project 1 -->
+            <div class="card">
+                <div class="card-number">Project 01</div>
+                <h3>Sleep & Stress Analysis</h3>
+                <p>Analyzing whether lower sleep duration correlates with higher stress levels using statistical modeling and visualization.</p>
+                <div class="card-tags">
+                    <span class="tag">Python</span>
+                    <span class="tag">Data Analysis</span>
+                    <span class="tag">Statistics</span>
+                </div>
+                <div class="card-links">
+                    <a class="card-link" target="_blank" href="https://github.com/tkhong-gif/DTSC_2301">
+                        ↗ GitHub
+                    </a>
+                    <a class="card-link" target="_blank" href="files/Data science project 2.pdf">
+                        ↗ Report
+                    </a>
+                </div>
+            </div>
 
-<section id="blog">
-    <h2>My Blog</h2>
+            <!-- Project 2 -->
+            <div class="card">
+                <div class="card-number">Project 02</div>
+                <h3>LoL Win Rate Predictor</h3>
+                <p>Predicting League of Legends win rates between champions using machine learning classification models.</p>
+                <div class="card-tags">
+                    <span class="tag">ML</span>
+                    <span class="tag">Prediction</span>
+                    <span class="tag">Gaming Data</span>
+                </div>
+                <div class="card-links">
+                    <a class="card-link" target="_blank" href="https://github.com/tkhong-gif/DTSC_2301/blob/main/Data%20Science%20Project%202.ipynb">
+                        ↗ GitHub
+                    </a>
+                    <a class="card-link" target="_blank" href="https://docs.google.com/document/d/1JvUqBsizhrrGYZVQflhtMDibColCYIcNzXtAVeF2XMs/edit?tab=t.0">
+                        ↗ Report
+                    </a>
+                </div>
+            </div>
 
-    <div class="card">
-        <h3>Blog Post Title 1</h3>
-        <p>This is a short preview of your blog post. You can write about anything here.</p>
-    </div>
+            <!-- Project 3 -->
+            <div class="card">
+                <div class="card-number">Project 03</div>
+                <h3>Project 3 Title</h3>
+                <p>Describe your third project here. What problem does it solve? What methods or tools did you use?</p>
+                <div class="card-tags">
+                    <span class="tag">Tag 1</span>
+                    <span class="tag">Tag 2</span>
+                    <span class="tag">Tag 3</span>
+                </div>
+                <div class="card-links">
+                    <a class="card-link" target="_blank" href="https://toannguyen58.github.io/dtsc2301_2/">
+                        ↗ GitHub
+                    </a>
+                    <a class="card-link" target="_blank" href="https://docs.google.com/document/d/1wn3-LBhGcnIKKvVb8qJ7uU5bMCqj5ZXPQwuOKkUYAr8/edit?tab=t.iccbbfg64le3">
+                        ↗ Report
+                    </a>
+                </div>
+            </div>
 
-    <div class="card">
-        <h3>Blog Post Title 2</h3>
-        <p>Another blog post preview. Share your thoughts, ideas, or tutorials.</p>
-    </div>
+        </div>
+    </section>
 
-</section>
+    <!-- BLOG -->
+    <section id="blog">
+        <div class="section-header">
+            <p class="section-label">Writing</p>
+            <h2 class="section-title">Blog</h2>
+            <p class="section-subtitle">Thoughts, tutorials, and ideas.</p>
+        </div>
+
+        <div class="blog-list">
+            <a class="blog-card" href="#">
+                <div class="blog-card-left">
+                    <div class="blog-meta">Post 01</div>
+                    <h3>Blog Post Title 1</h3>
+                    <p>This is a short preview of your blog post. You can write about anything here.</p>
+                </div>
+                <span class="blog-arrow">→</span>
+            </a>
+            <a class="blog-card" href="#">
+                <div class="blog-card-left">
+                    <div class="blog-meta">Post 02</div>
+                    <h3>Blog Post Title 2</h3>
+                    <p>Another blog post preview. Share your thoughts, ideas, or tutorials.</p>
+                </div>
+                <span class="blog-arrow">→</span>
+            </a>
+        </div>
+    </section>
+
+</main>
 
 <footer>
-    <p>© 2026 My Website | All Rights Reserved</p>
+    <p>© 2026 <span>Tam Khong</span> — All Rights Reserved</p>
 </footer>
 
 <script>
     function showSection(sectionId) {
-        const sections = document.querySelectorAll("section");
-        sections.forEach(section => {
-            section.classList.remove("active");
-        });
-        document.getElementById(sectionId).classList.add("active");
+        document.querySelectorAll('section').forEach(s => s.classList.remove('active'));
+        document.querySelectorAll('nav a').forEach(a => a.classList.remove('active'));
+        document.getElementById(sectionId).classList.add('active');
+        document.getElementById('nav-' + sectionId).classList.add('active');
     }
 </script>
-
 </body>
 </html>
